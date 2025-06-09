@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ntUle9aPj2M=",
+  "success": true,
+  "projectFilePath": "C:\\Work\\Demo\\Services\\Catalog\\src\\Catalog.Application\\Catalog.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\julie\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.5\\microsoft.extensions.dependencyinjection.abstractions.9.0.5.nupkg.sha512",
+    "C:\\Users\\julie\\.nuget\\packages\\riok.mapperly\\4.2.1\\riok.mapperly.4.2.1.nupkg.sha512"
+  ],
+  "logs": []
+}

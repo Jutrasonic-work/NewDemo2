@@ -1,0 +1,286 @@
+[
+  {
+    "ContainingType": "Catalog.Api.Endpoints.CategoriesEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapCategoriesEndpointsAsync\u003Eb__0_0",
+    "RelativePath": "api/categories",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "Description": "Retrieves a list of categories with optional filtering and pagination.",
+    "Summary": "Get list of categories"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.CategoriesEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapCategoriesEndpointsAsync\u003Eb__0_2",
+    "RelativePath": "api/categories",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Catalog.Application.Features.Categories.Contracts.Requests.CreateCategoryRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "Description": "Creates a new category with the provided details.",
+    "Summary": "Create a new category"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.CategoriesEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapCategoriesEndpointsAsync\u003Eb__0_1",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "Description": "Retrieves a category by its unique identifier.",
+    "Summary": "Get a category by ID"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.CategoriesEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapCategoriesEndpointsAsync\u003Eb__0_3",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Catalog.Application.Features.Categories.Contracts.Requests.UpdateCategoryRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "Description": "Updates an existing category with the provided details.",
+    "Summary": "Update an existing category"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.CategoriesEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapCategoriesEndpointsAsync\u003Eb__0_4",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "DeleteCategoryRequest",
+        "Type": "Catalog.Application.Features.Categories.Contracts.Requests.DeleteCategoryRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "Description": "Deletes a category by its unique identifier.",
+    "Summary": "Delete a category"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.ProductsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapProductsEndpoints\u003Eb__0_0",
+    "RelativePath": "api/products",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Products"
+    ],
+    "Description": "Retrieves a list of products with optional filtering and pagination.",
+    "Summary": "Get list of products"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.ProductsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapProductsEndpoints\u003Eb__0_2",
+    "RelativePath": "api/products",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Catalog.Application.Features.Products.Contracts.Requests.CreateProductRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Products"
+    ],
+    "Description": "Creates a new product with the provided details.",
+    "Summary": "Create a new product"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.ProductsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapProductsEndpoints\u003Eb__0_1",
+    "RelativePath": "api/products/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Products"
+    ],
+    "Description": "Retrieves a product by its unique identifier.",
+    "Summary": "Get a product by ID"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.ProductsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapProductsEndpoints\u003Eb__0_3",
+    "RelativePath": "api/products/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Catalog.Application.Features.Products.Contracts.Requests.UpdateProductRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Products"
+    ],
+    "Description": "Updates an existing product with the provided details.",
+    "Summary": "Update an existing product"
+  },
+  {
+    "ContainingType": "Catalog.Api.Endpoints.ProductsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapProductsEndpoints\u003Eb__0_4",
+    "RelativePath": "api/products/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Products"
+    ],
+    "Description": "Deletes a product by its unique identifier.",
+    "Summary": "Delete a product"
+  }
+]
