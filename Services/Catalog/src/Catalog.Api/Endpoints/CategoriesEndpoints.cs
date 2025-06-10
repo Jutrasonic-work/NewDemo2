@@ -17,7 +17,7 @@ public static class CategoriesEndpoints
                 //return Results.Ok(response.Categories);
                 return Results.Ok(categories);
             })
-            .WithSummary("Get list of categories")
+            .WithSummary("Gets list of categories")
             .WithDescription("Retrieves a list of categories with optional filtering and pagination.")
             .WithTags("Categories");
 
@@ -31,7 +31,7 @@ public static class CategoriesEndpoints
                     return Results.NotFound();
                 return Results.Ok(category);
             })
-            .WithSummary("Get a category by ID")
+            .WithSummary("Gets a category by ID")
             .WithDescription("Retrieves a category by its unique identifier.")
             .WithTags("Categories");
 
@@ -42,7 +42,7 @@ public static class CategoriesEndpoints
                 var id = await service.CreateAsync(request);
                 return Results.Created($"/api/categories/{id}", id);
             })
-            .WithSummary("Create a new category")
+            .WithSummary("Creates a new category")
             .WithDescription("Creates a new category with the provided details.")
             .WithTags("Categories");
         //.RequireAuthorization("Admin");
@@ -55,7 +55,7 @@ public static class CategoriesEndpoints
                 await service.UpdateAsync(request);
                 return Results.NoContent();
             })
-            .WithSummary("Update an existing category")
+            .WithSummary("Updates an existing category")
             .WithDescription("Updates an existing category with the provided details.")
             .WithTags("Categories");
         //.RequireAuthorization("Admin");
@@ -67,7 +67,7 @@ public static class CategoriesEndpoints
                 await service.DeleteAsync(new DeleteCategoryRequest { Id = id });
                 return Results.NoContent();
             })
-            .WithSummary("Delete a category")
+            .WithSummary("Deletes a category")
             .WithDescription("Deletes a category by its unique identifier.")
             .WithTags("Categories")
             .Accepts<DeleteCategoryRequest>("application/json");

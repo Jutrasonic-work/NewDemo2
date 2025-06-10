@@ -8,10 +8,10 @@ namespace Ordering.Application.Services;
 
 public class CatalogService(HttpClient httpClient, IConfiguration configuration) : ICatalogService
 {
-    public CatalogService()
-    {
-        httpClient.BaseAddress = new Uri(configuration["CatalogApi:BaseUrl"] ?? "http://localhost:5000");
-    }
+    //public CatalogService()
+    //{
+    //    httpClient.BaseAddress = new Uri(configuration["CatalogApi:BaseUrl"] ?? "http://localhost:5000");
+    //}
     public async Task<ProductDto?> GetProductById(Guid productId)
     {
         try

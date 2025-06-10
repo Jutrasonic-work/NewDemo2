@@ -2,8 +2,56 @@
 # Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs
-/Bff/FrontEnd/.vs
-/Bff/FrontEnd/bin
-/Bff/FrontEnd/obj
-/.gitignore
+## Ignorer les dossiers bin et obj de .NET
+**/[Bb]in/
+**/[Oo]bj/
+
+## Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+
+## Rider
+.idea/
+
+## Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## Logs
+*.log
+
+## Package files
+*.nupkg
+# Les fichiers de packages peuvent être déverrouillés si nécessaire
+# packages/
+
+## Fichiers de build
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]uild/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+## Fichiers temporaires
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc

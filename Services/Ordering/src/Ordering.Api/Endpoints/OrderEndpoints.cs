@@ -23,8 +23,8 @@ public static class OrderEndpoints
                 var orders = await mediator.Send(query);
                 return Results.Ok(orders);
             })
-        .WithName("GetOrders")
-        .WithOpenApi();
+            .WithSummary("Gets a list of orders")
+            .WithDescription("Retrieves a list of orders based on optional query parameters such as UserId, FromDate, and ToDate.")
 
         // Gets order by ID
         group.MapGet("/{id}",
@@ -32,10 +32,14 @@ public static class OrderEndpoints
             {
                 var query = new GetOrderByIdQuery(id);
                 var order = await mediator.Send(query);
-                return order is null ? Results.NotFound() : Results.Ok(order);
+                if (order is null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok(order);
             })
-        .WithName("GetOrderById")
-        .WithOpenApi();
+            .WithSummary("Gets an order by ID")
+            .WithDescription("Retrieves a specific order by its ID. If the order does not exist, returns a 404 Not Found response.");
 
         // Creates order
         group.MapPost("/",
@@ -44,8 +48,8 @@ public static class OrderEndpoints
                 var orderId = await mediator.Send(command);
                 return Results.Created($"/api/orders/{orderId}", orderId);
             })
-        .WithName("CreateOrder")
-        .WithOpenApi();
+            .WithSummary("Creates a new order")
+            .WithDescription("Creates a new order with the provided details. Returns the ID of the newly created order.");
 
         // Updates order
         group.MapPut("/{id}",
@@ -55,10 +59,14 @@ public static class OrderEndpoints
                     return Results.BadRequest("ID mismatch");
 
                 var result = await mediator.Send(command);
-                return result.Equals(Unit.Value) ? Results.NoContent() : Results.NotFound();
+                if (!result.Equals(Unit.Value))
+                {
+                    return Results.NotFound();
+                }
+                return Results.NoContent();
             })
-        .WithName("UpdateOrder")
-        .WithOpenApi();
+            .WithSummary("Updates an existing order")
+            .WithDescription("Updates an existing order with the provided details. If the order does not exist, returns a 404 Not Found response.");
 
         // Deletes order
         group.MapDelete("/{id}",
@@ -66,9 +74,13 @@ public static class OrderEndpoints
             {
                 var command = new DeleteOrderCommand { Id = id };
                 var result = await mediator.Send(command);
-                return result.Equals(Unit.Value) ? Results.NoContent() : Results.NotFound();
+                if (!result.Equals(Unit.Value))
+                {
+                    return Results.NotFound();
+                }
+                return Results.NoContent();
             })
-        .WithName("DeleteOrder")
-        .WithOpenApi();
+            .WithSummary("Deletes an order")
+            .WithDescription("Deletes an order by its ID. If the order does not exist, returns a 404 Not Found response.");
     }
 }
