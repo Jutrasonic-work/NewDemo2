@@ -8,13 +8,12 @@ public static class DependencyInjection
     {
         services.AddScoped<GetProductsUseCase>();
         services.AddScoped<GetProductDetailsUseCase>();
-        services.AddScoped<GetCartUseCase>();
+        services.AddScoped<GetOrderUseCase>();
         services.AddScoped<GetCategoriesUseCase>();
         services.AddScoped<GetCategoryDetailsUseCase>();
-        services.AddScoped<AddToCartUseCase>();
-        services.AddScoped<UpdateCartItemUseCase>();
-        services.AddScoped<RemoveFromCartUseCase>();
-        services.AddScoped<GetCartUseCase>();
+        services.AddScoped<AddToOrderUseCase>();
+        services.AddScoped<RemoveFromOrderUseCase>();
+        services.AddScoped<GetOrderUseCase>();
         return services;
     }
 }

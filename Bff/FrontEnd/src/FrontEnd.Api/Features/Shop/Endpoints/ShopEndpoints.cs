@@ -11,53 +11,37 @@ public static class ShopEndpoints
         var shopGroup = app.MapGroup("/api/shop")
             .WithTags("Shop");
 
-        // Gets the current user's cart
-        shopGroup.MapGet("/GetCart/{id}",
-            async (int id, [FromServices] GetCartUseCase useCase) =>
+        // Gets the current user's order
+        shopGroup.MapGet("/GetOrder/{id}",
+            async (int id, [FromServices] GetOrderUseCase useCase) =>
             {
-                var cart = await useCase.ExecuteAsync(id);
-                return Results.Ok(cart);
+                var order = await useCase.ExecuteAsync(id);
+                return Results.Ok(order);
             })
-            .WithSummary("Gets Cart")
-            .WithDescription("Retrieves the current user's shopping cart by user ID.");
+            .WithSummary("Gets Order")
+            .WithDescription("Retrieves the current user's shopping order by user ID.");
 
-        // Adds a product to the user's cart
-        shopGroup.MapPost("/AddToCart",
-            async (int id, [FromBody] AddToCartRequest request, [FromServices] AddToCartUseCase useCase) =>
-            {
-                await useCase.ExecuteAsync(request);
-                return Results.NoContent();
-            })
-            .WithSummary("Adds to Cart")
-            .WithDescription("Adds a product to the user's shopping cart. The product ID is provided in the request body.");
-
-        // Updates an item in the user's cart
-        shopGroup.MapPut("/UpdateCartItem/{id}",
-            async (int id, [FromBody] UpdateCartItemRequest request, [FromServices] UpdateCartItemUseCase useCase) =>
+        // Adds a product to the user's order
+        shopGroup.MapPost("/AddToOrder/{id}",
+            async (int id, [FromBody] AddToOrderRequest request, [FromServices] AddToOrderUseCase useCase) =>
             {
                 await useCase.ExecuteAsync(id, request);
                 return Results.NoContent();
             })
-            .WithSummary("Updates Cart Item")
-            .WithDescription("Updates an item in the user's shopping cart. The item ID is provided in the URL, and the updated details are in the request body.");
+            .WithSummary("Adds to Order")
+            .WithDescription("Adds a product to the user's shopping order. The product ID is provided in the request body.");
 
-        // Removes an item from the user's cart
-        shopGroup.MapDelete("/RemoveFromCart/{id}",
-            async (int id, [FromServices] RemoveFromCartUseCase useCase) =>
+
+        // Removes an item from the user's order
+        shopGroup.MapDelete("/RemoveFromOrder/{id}",
+            async (int id, [FromServices] RemoveFromOrderUseCase useCase) =>
             {
                 await useCase.ExecuteAsync(id);
                 return Results.NoContent();
             })
-            .WithSummary("Removes From Cart")
-            .WithDescription("Removes an item from the user's shopping cart by item ID.");
+            .WithSummary("Removes From Order")
+            .WithDescription("Removes an item from the user's shopping order by item ID.");
 
-        // Clear the user's cart
-        //shopGroup.MapDelete("/ClearCart", async (
-        //    [FromServices] ClearCartUseCase useCase) =>
-        //{
-        //    await useCase.ExecuteAsync();
-        //    return Results.NoContent();
-        //});
 
 
         // Gets all categories

@@ -1,6 +1,6 @@
 namespace FrontEnd.Api.Features.Shop.Contracts.Responses;
 
-public record CartItem(
+public record OrderItem(
     int Id,
     int ProductId,
     string Name,

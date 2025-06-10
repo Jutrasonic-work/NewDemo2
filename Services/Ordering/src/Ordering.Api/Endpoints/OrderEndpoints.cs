@@ -24,7 +24,7 @@ public static class OrderEndpoints
                 return Results.Ok(orders);
             })
             .WithSummary("Gets a list of orders")
-            .WithDescription("Retrieves a list of orders based on optional query parameters such as UserId, FromDate, and ToDate.")
+            .WithDescription("Retrieves a list of orders based on optional query parameters such as UserId, FromDate, and ToDate.");
 
         // Gets order by ID
         group.MapGet("/{id}",
@@ -49,7 +49,7 @@ public static class OrderEndpoints
                 return Results.Created($"/api/orders/{orderId}", orderId);
             })
             .WithSummary("Creates a new order")
-            .WithDescription("Creates a new order with the provided details. Returns the ID of the newly created order.");
+            .WithDescription("Creates a new order from a validated cart.");
 
         // Updates order
         group.MapPut("/{id}",
@@ -58,29 +58,21 @@ public static class OrderEndpoints
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");
 
-                var result = await mediator.Send(command);
-                if (!result.Equals(Unit.Value))
-                {
-                    return Results.NotFound();
-                }
+                await mediator.Send(command);
                 return Results.NoContent();
             })
             .WithSummary("Updates an existing order")
-            .WithDescription("Updates an existing order with the provided details. If the order does not exist, returns a 404 Not Found response.");
+            .WithDescription("Updates an existing order with the provided details.");
 
         // Deletes order
         group.MapDelete("/{id}",
             async (Guid id, IMediator mediator) =>
             {
                 var command = new DeleteOrderCommand { Id = id };
-                var result = await mediator.Send(command);
-                if (!result.Equals(Unit.Value))
-                {
-                    return Results.NotFound();
-                }
+                await mediator.Send(command);
                 return Results.NoContent();
             })
             .WithSummary("Deletes an order")
-            .WithDescription("Deletes an order by its ID. If the order does not exist, returns a 404 Not Found response.");
+            .WithDescription("Deletes an order by its ID.");
     }
 }

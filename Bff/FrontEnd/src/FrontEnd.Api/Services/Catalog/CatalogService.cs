@@ -15,11 +15,13 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
         {
             var response = await _httpClient.PostAsJsonAsync("/api/products", request);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<int>();
+            var guidId = await response.Content.ReadFromJsonAsync<Guid>();
+            // Conversion sécurisée de Guid vers int en utilisant les 4 derniers octets
+            return BitConverter.ToInt32(guidId.ToByteArray().TakeLast(4).ToArray(), 0);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Erreur lors de la création du produit");
+            logger.LogError(ex, "Erreur lors de la création du produit {@Request}", request);
             throw;
         }
     }
@@ -28,12 +30,14 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/products/{id}", request);
+            // Conversion de l'ID en Guid pour l'API
+            var guidId = ConvertIntToGuid(id);
+            var response = await _httpClient.PutAsJsonAsync($"/api/products/{guidId}", request);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Erreur lors de la mise à jour du produit {ProductId}", id);
+            logger.LogError(ex, "Erreur lors de la mise à jour du produit {ProductId} avec {@Request}", id, request);
             throw;
         }
     }
@@ -42,7 +46,8 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"/api/products/{id}");
+            var guidId = ConvertIntToGuid(id);
+            var response = await _httpClient.DeleteAsync($"/api/products/{guidId}");
             response.EnsureSuccessStatusCode();
         }
         catch (Exception ex)
@@ -58,11 +63,12 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
         {
             var response = await _httpClient.PostAsJsonAsync("/api/categories", request);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<int>();
+            var guidId = await response.Content.ReadFromJsonAsync<Guid>();
+            return BitConverter.ToInt32(guidId.ToByteArray().TakeLast(4).ToArray(), 0);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Erreur lors de la création de la catégorie");
+            logger.LogError(ex, "Erreur lors de la création de la catégorie {@Request}", request);
             throw;
         }
     }
@@ -71,12 +77,13 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/categories/{id}", request);
+            var guidId = ConvertIntToGuid(id);
+            var response = await _httpClient.PutAsJsonAsync($"/api/categories/{guidId}", request);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Erreur lors de la mise à jour de la catégorie {CategoryId}", id);
+            logger.LogError(ex, "Erreur lors de la mise à jour de la catégorie {CategoryId} avec {@Request}", id, request);
             throw;
         }
     }
@@ -85,7 +92,8 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"/api/categories/{id}");
+            var guidId = ConvertIntToGuid(id);
+            var response = await _httpClient.DeleteAsync($"/api/categories/{guidId}");
             response.EnsureSuccessStatusCode();
         }
         catch (Exception ex)
@@ -100,8 +108,8 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<ProductResponse>>("/api/products")
-                ?? Enumerable.Empty<ProductResponse>();
+            var response = await _httpClient.GetFromJsonAsync<ProductListResponse>("/api/products");
+            return response?.Items ?? Enumerable.Empty<ProductResponse>();
         }
         catch (Exception ex)
         {
@@ -114,7 +122,9 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<ProductResponse>($"/api/products/{id}");
+            var guidId = ConvertIntToGuid(id);
+            var response = await _httpClient.GetFromJsonAsync<ProductResponse>($"/api/products/{guidId}");
+            return response;
         }
         catch (Exception ex)
         {
@@ -127,8 +137,8 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<CategoryResponse>>("/api/categories")
-                ?? Enumerable.Empty<CategoryResponse>();
+            var response = await _httpClient.GetFromJsonAsync<CategoryListResponse>("/api/categories");
+            return response?.Items ?? Enumerable.Empty<CategoryResponse>();
         }
         catch (Exception ex)
         {
@@ -141,7 +151,8 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<CategoryResponse>($"/api/categories/{id}");
+            var guidId = ConvertIntToGuid(id);
+            return await _httpClient.GetFromJsonAsync<CategoryResponse>($"/api/categories/{guidId}");
         }
         catch (Exception ex)
         {
@@ -154,13 +165,22 @@ public class CatalogService(IHttpClientFactory httpClientFactory, ILogger<Catalo
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<ProductResponse>>($"/api/categories/{categoryId}/products")
-                ?? Enumerable.Empty<ProductResponse>();
+            var guidId = ConvertIntToGuid(categoryId);
+            var response = await _httpClient.GetFromJsonAsync<ProductListResponse>($"/api/products?categoryId={guidId}");
+            return response?.Items ?? Enumerable.Empty<ProductResponse>();
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Erreur lors de la récupération des produits de la catégorie {CategoryId}", categoryId);
             throw;
         }
+    }
+
+    // Méthode utilitaire pour convertir un int en Guid
+    private static Guid ConvertIntToGuid(int value)
+    {
+        var bytes = new byte[16];
+        BitConverter.GetBytes(value).CopyTo(bytes, 0);
+        return new Guid(bytes);
     }
 } 

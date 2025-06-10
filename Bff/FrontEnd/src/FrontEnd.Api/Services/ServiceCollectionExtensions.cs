@@ -1,3 +1,4 @@
+using FrontEnd.Api.Configuration;
 using FrontEnd.Api.Services.Auth;
 using FrontEnd.Api.Services.Catalog;
 using FrontEnd.Api.Services.Order;
@@ -8,15 +9,19 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
+        // Récupération de la configuration typée
+        var apiSettings = configuration.GetSection("ApiSettings").Get<ApiSettings>();
+        ArgumentNullException.ThrowIfNull(apiSettings);
+
         // Configuration des clients HTTP
         services.AddHttpClient("CatalogApi", client =>
         {
-            client.BaseAddress = new Uri(configuration["ApiSettings:CatalogApi"] ?? throw new InvalidOperationException("URL de l'API Catalog non configurée"));
+            client.BaseAddress = new Uri(apiSettings.CatalogApi.BaseUrl);
         });
 
         services.AddHttpClient("OrderApi", client =>
         {
-            client.BaseAddress = new Uri(configuration["ApiSettings:OrderApi"] ?? throw new InvalidOperationException("URL de l'API Order non configurée"));
+            client.BaseAddress = new Uri(apiSettings.OrderingApi.BaseUrl);
         });
 
         services.AddHttpClient("AuthApi", client =>

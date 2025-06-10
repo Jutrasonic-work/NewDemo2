@@ -5,9 +5,14 @@ namespace FrontEnd.Api.Services.Order;
 
 public interface IOrderService
 {
-    Task<CartResponse> GetCartAsync(int id);
-    Task AddToCartAsync(AddToCartRequest request);
-    Task UpdateCartItemAsync(int id, UpdateCartItemRequest request);
-    Task RemoveFromCartAsync(int id);
-    Task ClearCartAsync();
+    // Création et gestion des commandes
+    Task<Guid> CreateOrderAsync(CreateOrderRequest request);
+    Task<OrderResponse> GetOrderAsync(int id);
+    Task<IEnumerable<OrderResponse>> GetOrdersAsync(int userId);
+    Task UpdateOrderAsync(int id, UpdateOrderRequest request);
+    Task DeleteOrderAsync(int id);
+
+    // Gestion des articles dans une commande
+    Task AddToOrderAsync(int orderId, AddToOrderRequest request);
+    Task RemoveFromOrderAsync(int orderId, int itemId);
 } 

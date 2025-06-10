@@ -5,27 +5,34 @@ using FrontEnd.Api.Features.Admin.Endpoints;
 using FrontEnd.Api.Features.Shop;
 using FrontEnd.Api.Features.Shop.Endpoints;
 using FrontEnd.Api.Services;
+using FrontEnd.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowVueApp",
-        builder => builder
-            .WithOrigins("http://localhost:5173")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 });
 
+// Add API Services
 builder.Services.AddApiServices(builder.Configuration);
 
 // Register use cases
 builder.Services.AddAdminFeatures();
 builder.Services.AddShopFeatures();
 builder.Services.AddAccountFeatures();
-
 
 var app = builder.Build();
 
@@ -36,10 +43,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowVueApp");
 app.UseHttpsRedirection();
 
-// Map endpoints
+// Map Endpoints
 app.MapAccountEndpoints();
 app.MapAdminEndpoints();
 app.MapShopEndpoints();
